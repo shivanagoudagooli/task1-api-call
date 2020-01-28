@@ -1,6 +1,5 @@
 <template>
     <div>
-       
         <div class="grid-container">
         <div v-for="(img,index) in imageArr" :key="index" class="grid-item">
              <img :src="img" width="200px" height="160px" v-on:click="nextPage"/>            
@@ -9,7 +8,7 @@
     </div>
 </template>
 <script>
-import { mapGetters, mapMutations} from 'vuex'
+import { Callapi } from '../components/Api'
 export default {
     data(){
         return{
@@ -19,21 +18,21 @@ export default {
         }
     },
     computed:{
-        ...mapGetters(['getCredencials'])
     },
     mounted(){
-        fetch('https://api.cloud.altbalaji.com/media/series/275/seasons/292/episodes?limit=10&order=asc&domain=in')
-        .then(Response => Response.json())
+         let api = new Callapi();
+        api.getImage()
         .then((res)=>{
             let arr = res.episodes;
              this.filterImage(arr)
-        })
+        });
     },
     methods:{
-        ...mapMutations(['setCredencials']),
-       filterImage(arr) {
+       filterImage(arr) 
+       {
              let resp=[]
-           arr.forEach(element => {
+           arr.forEach(element => 
+           {
             resp.push(this.getimage(element.images))
            });
          this.imageArr = resp 
@@ -41,29 +40,34 @@ export default {
        getimage(img) {
            
         let imageList = []
-         img.forEach(ele => {
-               if(ele.type == "system") { 
+         img.forEach(ele => 
+         {
+               if(ele.type == "system") 
+               { 
                imageList.push(ele.format["thumbnail-ld"].source)        
                }
            })
            
            return imageList
        },
-       nextPage(){
+       nextPage()
+       {
            this.$router.push('Player')
        }
     }
 }
 </script>
 <style scoped>
-.grid-container {
+.grid-container
+{
   display: grid;
   grid-template-columns: auto auto auto;
   background-color:black;
   padding: 0px;
 }
 
-.grid-item {
+.grid-item 
+{
   background-color: rgba(255, 255, 255, 0.8);
   border: 1px solid rgba(0, 0, 0, 0.8);
   padding: 10px;

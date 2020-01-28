@@ -8,9 +8,9 @@ import Player from '../components/Player.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/',name:loginPage,component:loginPage},
-  {path : '/Home', name:Home,component:Home},
-  { path:'/Player', name:Player, component:Player}
+  { path: "/", component:loginPage},
+  { path : "/home", name:Home,component:Home},
+  { path:"/Player", component:Player}
 ]
 
 const router = new VueRouter({
